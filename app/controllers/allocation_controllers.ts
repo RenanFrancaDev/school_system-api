@@ -46,11 +46,15 @@ export default class AllocationsController {
       })
     }
 
-    // RN03: Check if student is already allocated to any classroom
-    const existingAllocation = await Allocation.findBy('student_id', studentId)
+    // checks if the student is already in a specific room
+    const existingAllocation = await Allocation.query()
+      .where('student_id', studentId)
+      .andWhere('classroom_id', classroomId) // ← Filtra pela sala específica
+      .first()
+
     if (existingAllocation) {
       return response.badRequest({
-        error: 'Student is already allocated to a classroom',
+        error: 'Student is already allocated to this classroom', // Mensagem mais específica
       })
     }
 
@@ -84,8 +88,7 @@ export default class AllocationsController {
     })
   }
 
-  //Remove student from classroom
-
+  // Remove student from classroom
   async destroy({ params, request, response }: HttpContext) {
     const teacher = request.user!
 

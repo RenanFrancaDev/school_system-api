@@ -7,6 +7,7 @@ export default class UsersController {
   //Get all users (with pagination)
 
   async index({ request, response }: HttpContext) {
+    console.log('aqui')
     const page = request.input('page', 1)
     const limit = request.input('limit', 10)
 
@@ -115,14 +116,14 @@ export default class UsersController {
       })
     }
 
-    const allocation = await Allocation.query()
+    const allocations = await Allocation.query()
       .where('student_id', params.id)
       .preload('classroom', (classroomQuery) => {
         classroomQuery.preload('teacher')
       })
-      .first()
+      .exec() // Isso retorna um array com todas as alocações
 
-    if (!allocation) {
+    if (!allocations || allocations.length === 0) {
       return response.ok({
         student: student.name,
         classrooms: [],
@@ -130,14 +131,17 @@ export default class UsersController {
     }
 
     // RN06: Return student name + array with teacher name and classroom number
-    const classroomData = {
+    const classroomsData = allocations.map((allocation) => ({
       teacherName: allocation.classroom.teacher.name,
       classroomNumber: allocation.classroom.name,
-    }
+
+      allocationId: allocation.id,
+      classroomId: allocation.classroom.id,
+    }))
 
     return response.ok({
       student: student.name,
-      classrooms: [classroomData],
+      classrooms: classroomsData, // Agora é um array com todas as salas
     })
   }
 

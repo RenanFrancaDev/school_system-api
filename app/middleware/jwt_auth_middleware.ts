@@ -32,7 +32,8 @@ export default class JwtAuthMiddleware {
       const user = await User.find(decoded.sub)
 
       if (!user) {
-        return response.unauthorized({ error: 'User not found' })
+        console.log('AQUI')
+        return response.unauthorized({ error: 'Invalid Token [middleware]' })
       }
 
       //Include user in the request to identify and check yout type

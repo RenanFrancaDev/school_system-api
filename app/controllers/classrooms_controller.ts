@@ -5,9 +5,8 @@ import { createClassroomSchema, updateClassroomSchema } from '../schemas/classro
 import Allocation from '#models/allocation'
 
 export default class ClassroomsController {
-  /**
-   * Get all classrooms (with pagination and filters)
-   */
+  // Get all classrooms (with pagination and filters)
+
   async index({ request, response }: HttpContext) {
     const page = request.input('page', 1)
     const limit = request.input('limit', 10)
@@ -25,9 +24,8 @@ export default class ClassroomsController {
     return response.ok(classrooms)
   }
 
-  /**
-   * Get specific classroom by ID
-   */
+  // Get specific classroom by ID
+
   async show({ params, response }: HttpContext) {
     const classroom = await Classroom.query()
       .where('id', params.id)
@@ -39,9 +37,8 @@ export default class ClassroomsController {
     })
   }
 
-  /**
-   * Create new classroom (only teachers)
-   */
+  //Create new classroom (only teachers)
+
   async store({ request, response }: HttpContext) {
     const teacher = request.user!
 
