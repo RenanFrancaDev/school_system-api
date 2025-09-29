@@ -1,0 +1,66 @@
+import type { HttpContext } from '@adonisjs/core/http'
+import { DateTime } from 'luxon'
+import User from '#models/user'
+import jwt from 'jsonwebtoken'
+
+export default class AuthController {
+  private generateToken(user: User): string {
+    const payload = {
+      sub: user.id,
+      type: user.type, //necessary to check if user is student or teacher
+      registration: user.registration,
+    }
+
+    return jwt.sign(payload, process.env.APP_KEY!, {
+      expiresIn: '24h',
+    })
+  }
+
+  async register({ request, response }: HttpContext) {
+    const data = request.only(['name', 'email', 'password', 'type', 'birthDate'])
+
+    const randomNumbers = Math.floor(10000 + Math.random() * 90000)
+    const registration = data.type === 'teacher' ? `T${randomNumbers}` : `S${randomNumbers}`
+
+    const birthDate = DateTime.fromISO(data.birthDate)
+
+    const user = await User.create({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      type: data.type,
+      registration: registration,
+      birthDate: birthDate,
+    })
+
+    const token = this.generateToken(user)
+
+    return response.created({
+      message: 'User created successfully',
+      token: token,
+    })
+  }
+
+  async login({ request, response }: HttpContext) {
+    const { email, password } = request.only(['email', 'password'])
+
+    const user = await User.verifyCredentials(email, password)
+    const token = this.generateToken(user)
+
+    return response.ok({
+      message: 'Login successful',
+      token: token,
+    })
+  }
+
+  async me({ request, response }: HttpContext) {
+    // TODO Middleware
+    return response.ok({ message: 'Implementar middleware JWT' })
+  }
+
+  async logout({ response }: HttpContext) {
+    return response.ok({
+      message: 'Logout successful',
+    })
+  }
+}
