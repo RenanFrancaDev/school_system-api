@@ -14,5 +14,6 @@ router.use([
 ])
 
 export const middleware = router.named({
+  jwtAuth: () => import('#middleware/jwt_auth_middleware'),
   auth: () => import('#middleware/auth_middleware'),
 })

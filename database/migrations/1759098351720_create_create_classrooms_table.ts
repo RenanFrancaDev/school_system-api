@@ -5,11 +5,11 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').notNullable()
-      table.string('name', 10).notNullable().unique()
+      table.uuid('id').primary()
+      table.string('name', 20).notNullable().unique()
       table.integer('capacity').notNullable()
       table.boolean('is_available').notNullable().defaultTo(true)
-      table.integer('teacher_id').unsigned().references('id').inTable('users').notNullable()
+      table.uuid('teacher_id').references('id').inTable('users').notNullable()
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()
     })
