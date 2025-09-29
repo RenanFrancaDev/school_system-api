@@ -1,6 +1,7 @@
 import router from '@adonisjs/core/services/router'
 import AuthController from '#controllers/auth_controller'
 import UsersController from '#controllers/users_controller'
+import ClassroomsController from '#controllers/classrooms_controller'
 import { middleware } from './kernel.js'
 
 router
@@ -26,6 +27,16 @@ router
         router.delete('users/:id', [UsersController, 'destroy']) // Can only delete own account
       })
       .middleware([middleware.jwtAuth()])
+
+    //Classrooms Routes
+    router
+      .group(() => {
+        router.get('/classrooms', [ClassroomsController, 'index'])
+        router.get('/classrooms/:id', [ClassroomsController, 'show'])
+        router.post('/classrooms', [ClassroomsController, 'store'])
+        router.put('/classrooms/:id', [ClassroomsController, 'update']) // Can only delete own classroom
+        router.delete('/classrooms/:id', [ClassroomsController, 'destroy']) // Can only delete own classroom
+      })
+      .middleware([middleware.jwtAuth()])
   })
-  .middleware([middleware.jwtAuth()])
   .prefix('/api')
