@@ -13,7 +13,7 @@ export default class UsersController {
     return response.ok(users)
   }
 
-  //Get id user
+  //Get user by id
   async show({ params, response }: HttpContext) {
     const user = await User.findOrFail(params.id)
 
