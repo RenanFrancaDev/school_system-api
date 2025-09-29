@@ -6,6 +6,7 @@ export const registerUserSchema = schema.create({
     rules.minLength(2),
     rules.maxLength(60),
     rules.alphaNum({ allow: ['space', 'dash'] }),
+    rules.regex(/^[a-zA-ZÀ-ÿ\s\u00f1\u00d1\-'.]+$/), //allows accent
   ]),
   email: schema.string([rules.email(), rules.normalizeEmail({ allLowercase: true })]),
   password: schema.string([rules.minLength(6), rules.maxLength(255), rules.confirmed()]),
@@ -28,4 +29,10 @@ export const updateUserSchema = schema.create({
 export const loginUserSchema = schema.create({
   email: schema.string([rules.email(), rules.normalizeEmail({ allLowercase: true })]),
   password: schema.string(),
+})
+
+//reset password
+export const changePasswordSchema = schema.create({
+  currentPassword: schema.string(),
+  newPassword: schema.string([rules.minLength(6), rules.maxLength(255), rules.confirmed()]),
 })

@@ -14,7 +14,9 @@ export default class Classroom extends BaseModel {
   @column()
   declare capacity: number
 
-  @column()
+  @column({
+    serialize: (value: number) => value === 1, // CONVERT 1/0 TO true/false (MySQL)
+  })
   declare isAvailable: boolean
 
   @column()

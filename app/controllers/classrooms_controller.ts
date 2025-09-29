@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { randomUUID } from 'node:crypto'
 import Classroom from '#models/classroom'
 import { createClassroomSchema, updateClassroomSchema } from '../schemas/classrooms_schemas.js'
+import Allocation from '#models/allocation'
 
 export default class ClassroomsController {
   /**
@@ -69,12 +70,14 @@ export default class ClassroomsController {
     })
   }
 
-  /**
-   * Update classroom (only owner teacher)
-   */
+  //Update classroom (only owner teacher)
+
   async update({ params, request, response }: HttpContext) {
     const teacher = request.user!
-    const classroom = await Classroom.findOrFail(params.id)
+    const classroom = await Classroom.find(params.id)
+    if (!classroom) {
+      return response.notFound('Classroom not found')
+    }
 
     // Check if user is the classroom owner
     if (classroom.teacherId !== teacher.id) {
@@ -106,12 +109,14 @@ export default class ClassroomsController {
     })
   }
 
-  /**
-   * Delete classroom (only owner teacher)
-   */
+  // Delete classroom (only owner teacher)
+
   async destroy({ params, request, response }: HttpContext) {
     const teacher = request.user!
-    const classroom = await Classroom.findOrFail(params.id)
+    const classroom = await Classroom.find(params.id)
+    if (!classroom) {
+      return response.notFound('Classroom not found')
+    }
 
     // Check if user is the classroom owner
     if (classroom.teacherId !== teacher.id) {
@@ -124,6 +129,27 @@ export default class ClassroomsController {
 
     return response.ok({
       message: 'Classroom deleted successfully',
+    })
+  }
+
+  //Get all students in a classroom
+
+  async students({ params, response }: HttpContext) {
+    const classroom = await Classroom.find(params.id)
+    if (!classroom) {
+      return response.notFound('Classroom not found')
+    }
+
+    const students = await Allocation.query()
+      .where('classroom_id', params.id)
+      .preload('student')
+      .select('student_id')
+
+    const studentList = students.map((allocation) => allocation.student.serialize())
+
+    return response.ok({
+      classroom: classroom.name,
+      students: studentList,
     })
   }
 }

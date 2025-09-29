@@ -21,6 +21,22 @@ export default class AuthController {
     // Validate input data using schema
     const data = await request.validate({ schema: registerUserSchema })
 
+    if (data.name && typeof data.name === 'string') {
+      data.name = data.name.trim()
+    }
+
+    if (data.email && typeof data.email === 'string') {
+      data.email = data.email.trim()
+    }
+
+    //Verify if e-mail already is registered
+    const existingUser = await User.query().where('email', data.email).first()
+    if (existingUser) {
+      return response.badRequest({
+        message: 'This e-mail is already registered',
+      })
+    }
+
     const randomNumbers = Math.floor(10000 + Math.random() * 90000)
     const registration = data.type === 'teacher' ? `T${randomNumbers}` : `S${randomNumbers}`
 

@@ -1,0 +1,597 @@
+type: collection.insomnia.rest/5.0
+name: School API
+meta:
+  id: wrk_57faec0b90ca40abb04b195eb81bd67d
+  created: 1759100043483
+  modified: 1759100043483
+  description: ""
+collection:
+  - url: "{{baseUrl}}"
+    name: Help route
+    meta:
+      id: req_46b27e6c11814d2eaa70a09c647e511b
+      created: 1759100061361
+      modified: 1759105501043
+      isPrivate: false
+      description: ""
+      sortKey: -1759100061361
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.6.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - name: Auth
+    meta:
+      id: fld_ba45207e5fe641008796a7b3773e6d7a
+      created: 1759104979991
+      modified: 1759120288176
+      sortKey: -1759104979991
+      description: ""
+    children:
+      - url: "{{baseUrl}}/auth/register"
+        name: Register
+        meta:
+          id: req_861a7341517440078eb11558a537c0f8
+          created: 1759105006194
+          modified: 1759125791820
+          isPrivate: false
+          description: ""
+          sortKey: -1759105009194
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "name": "Renan Franca",
+              "email": "renan@email.com", 
+              "password": "123456",
+            	"password_confirmation":"123456",
+              "type": "teacher",
+              "registration": "T001",
+              "birthDate": "1992-01-01"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/auth/login"
+        name: Login
+        meta:
+          id: req_c950a866079a49b2b91da0ceb65d9ece
+          created: 1759106586335
+          modified: 1759120736395
+          isPrivate: false
+          description: ""
+          sortKey: -1759102535277.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "teacher1033@email.com",
+              "password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyYTdhZTExMi01ZjJjLTRlNzgtODVmNC1hMjcxOWZhOTAyOTAiLCJ0eXBlIjoidGVhY2hlciIsImlhdCI6MTc1OTEyMDcxNCwiZXhwIjoxNzU5MjA3MTE0fQ.-7gkhGnNuJb_HIoFu5VOrLK20K9nyBSyckhWUU8mFEM
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/auth/me"
+        name: Me
+        meta:
+          id: req_7dfbb054939b4dddb8f51235857b93f0
+          created: 1759113793961
+          modified: 1759114660235
+          isPrivate: false
+          description: ""
+          sortKey: -1759102535177.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: ""
+          disabled: true
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/auth/logout"
+        name: Logout
+        meta:
+          id: req_7f00a91456f84f3eb107fdecc0a82dde
+          created: 1759114559509
+          modified: 1759114563364
+          isPrivate: false
+          description: ""
+          sortKey: -1759102535227.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "teacher10@email.com",
+              "password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: ""
+      disabled: true
+  - name: Users
+    meta:
+      id: fld_fe2505bb2602451eb34067c5b6fa32c7
+      created: 1759115998833
+      modified: 1759120646081
+      sortKey: -1759115998833
+      description: ""
+    children:
+      - url: "{{baseUrl}}/users"
+        name: Get All Users
+        meta:
+          id: req_240fe0e64fd44c17bc1fb6bb3f7cf78e
+          created: 1759116015186
+          modified: 1759122802870
+          isPrivate: false
+          description: ""
+          sortKey: -1759116015186
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/users/"
+        name: Get User By Id
+        meta:
+          id: req_ada9d6fc71be4e3997ec9eed64f25bbb
+          created: 1759116457004
+          modified: 1759130400409
+          isPrivate: false
+          description: ""
+          sortKey: -1759110512190
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/users/7b450cf2-e4e7-449d-aef6-b20062abb6c6"
+        name: Update User
+        meta:
+          id: req_541bcba0e0d6433eba773f0ada003a59
+          created: 1759116464691
+          modified: 1759119667168
+          isPrivate: false
+          description: ""
+          sortKey: -1759107760692
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "name": "Nameeeeee",
+              "email": "teacher10ww@email.com", 
+              "password": "123456",
+              "type": "techer",
+              "registration": "T91",
+              "birthDate": "1992-01-01"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/users/7b450cf2-e4e7-449d-aef6-b20062abb6c6"
+        name: Delete User
+        meta:
+          id: req_bb1ae3a0eaaf40aa86a195cb808fdae5
+          created: 1759116474186
+          modified: 1759119692490
+          isPrivate: false
+          description: ""
+          sortKey: -1759106384943
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/users/a20de5bf-c7d7-425b-b27b-158d4f489b55/classrooms"
+        name: Get Student Classrooms
+        meta:
+          id: req_49db4e04249b42a3becfbc071aa0fca2
+          created: 1759125949261
+          modified: 1759126138170
+          isPrivate: false
+          description: ""
+          sortKey: -1759109136441
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/users/password"
+        name: Change Password
+        meta:
+          id: req_2c204eb48de842a58dc965748184abb7
+          created: 1759129121128
+          modified: 1759129805747
+          isPrivate: false
+          description: ""
+          sortKey: -1759107072817.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "currentPassword": "123456",
+              "newPassword": "novaSenha123",
+              "newPassword_confirmation": "novaSenha123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyYTdhZTExMi01ZjJjLTRlNzgtODVmNC1hMjcxOWZhOTAyOTAiLCJ0eXBlIjoidGVhY2hlciIsImlhdCI6MTc1OTEyMDYyNiwiZXhwIjoxNzU5MjA3MDI2fQ.5DVQFAxs7wz5CEsklBT_4v826rVcE6NWsC6YNKFWJp4
+  - name: Classrooms
+    meta:
+      id: fld_4c08908654204a00b689ee0443a476cb
+      created: 1759122718441
+      modified: 1759125847546
+      sortKey: -1759122718441
+      description: ""
+    children:
+      - url: "{{baseUrl}}/classrooms"
+        name: Get All Classrooms
+        meta:
+          id: req_250b319cccf94f1db2e6742857a24fea
+          created: 1759122734880
+          modified: 1759122857086
+          isPrivate: false
+          description: ""
+          sortKey: -1759122734880
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/classrooms/d2abe3de-3149-482c-84b6-0d5fef2052c"
+        name: Get Classroom By Id
+        meta:
+          id: req_86581789bec942fb83e7164cd811c4eb
+          created: 1759122824637
+          modified: 1759131316377
+          isPrivate: false
+          description: ""
+          sortKey: -1759119375033
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/classrooms"
+        name: Create Classroom
+        meta:
+          id: req_98d3ecbd93054678904bf564d00dcdc7
+          created: 1759122836196
+          modified: 1759131328499
+          isPrivate: false
+          description: ""
+          sortKey: -1759117695109.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "name": "7A",
+              "capacity": 30
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/classrooms/d2abe3de-3149-482c-84b6-0d5fef2052c6"
+        name: Delete Classroom
+        meta:
+          id: req_075e83b495db4603b2f87eae39e6017e
+          created: 1759122845992
+          modified: 1759123201112
+          isPrivate: false
+          description: ""
+          sortKey: -1759116855147.75
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/classrooms/d2abe3de-3149-482c-84b6-0d5fef2052c6"
+        name: Update Classroom
+        meta:
+          id: req_e418f2dcc6d1472fb8ad1342a72c1668
+          created: 1759122889049
+          modified: 1759123192621
+          isPrivate: false
+          description: ""
+          sortKey: -1759117275128.625
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "name": "A101",
+              "capacity": 25
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/classrooms/fac7450a-a2e8-4cdc-b538-59dea3d04e9a/students"
+        name: Get Classrooms Students
+        meta:
+          id: req_b94535a319124ece8600ee7a623824f9
+          created: 1759126070405
+          modified: 1759126266338
+          isPrivate: false
+          description: ""
+          sortKey: -1759121054956.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODczOGRlNS0zMzJmLTRjNzMtYTVkMS1hOGVhNjg3ZWMyMjgiLCJ0eXBlIjoidGVhY2hlciIsImlhdCI6MTc1OTEyNTc5MywiZXhwIjoxNzU5MjEyMTkzfQ.JvJegVsyFH7gztMYcbhQJAv3CNG_7dfaifbP4c653eE
+  - name: Allocations
+    meta:
+      id: fld_c0b20e8ac6fc489d9dd2907417d64495
+      created: 1759125321729
+      modified: 1759125871739
+      sortKey: -1759125321729
+      description: ""
+    children:
+      - url: "{{baseUrl}}/allocations"
+        name: Delete Allocations
+        meta:
+          id: req_4d9d85b9adf94b539e11fafa8f279f35
+          created: 1759125325822
+          modified: 1759125604254
+          isPrivate: false
+          description: ""
+          sortKey: -1759124030251
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "studentId": "uuid_do_student",
+              "classroomId": "uuid_da_sala"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/allocations"
+        name: Create Allocations
+        meta:
+          id: req_bb7df0a90ab04143917e97ca9519b577
+          created: 1759125505330
+          modified: 1759125836489
+          isPrivate: false
+          description: ""
+          sortKey: -1759124030351
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "studentId": "a20de5bf-c7d7-425b-b27b-158d4f489b55",
+              "classroomId": "fac7450a-a2e8-4cdc-b538-59dea3d04e9a"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODczOGRlNS0zMzJmLTRjNzMtYTVkMS1hOGVhNjg3ZWMyMjgiLCJ0eXBlIjoidGVhY2hlciIsImlhdCI6MTc1OTEyNTc5MywiZXhwIjoxNzU5MjEyMTkzfQ.JvJegVsyFH7gztMYcbhQJAv3CNG_7dfaifbP4c653eE
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_0f85414fa76388402a642ad0d0a27a2e78da7b0d
+    created: 1759100043509
+    modified: 1759100043509
+environments:
+  name: Base Environment
+  meta:
+    id: env_0f85414fa76388402a642ad0d0a27a2e78da7b0d
+    created: 1759100043506
+    modified: 1759105460383
+    isPrivate: false
+  data:
+    baseUrl: http://localhost:3333/api
+  subEnvironments:
+    - name: New Environment
+      meta:
+        id: env_ca974eb7ecd343b7a970c7e99b4d6896
+        created: 1759105359746
+        modified: 1759105432412
+        isPrivate: false
+        sortKey: 1759105359748
+      data:
+        baseUrl:
+          baseUrl: http://localhost:3333/api
+          token: ""
