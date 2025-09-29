@@ -3,13 +3,13 @@ import { DateTime } from 'luxon'
 import { randomUUID } from 'node:crypto'
 import User from '#models/user'
 import jwt from 'jsonwebtoken'
+import { registerUserSchema, loginUserSchema } from '../schemas/user_schemas.js'
 
 export default class AuthController {
   private generateToken(user: User): string {
     const payload = {
       sub: user.id,
-      type: user.type, //necessary to check if user is student or teacher
-      registration: user.registration,
+      type: user.type,
     }
 
     return jwt.sign(payload, process.env.APP_KEY!, {
@@ -18,18 +18,16 @@ export default class AuthController {
   }
 
   async register({ request, response }: HttpContext) {
-    const data = request.only(['name', 'email', 'password', 'type', 'birthDate'])
+    // Validate input data using schema
+    const data = await request.validate({ schema: registerUserSchema })
 
     const randomNumbers = Math.floor(10000 + Math.random() * 90000)
     const registration = data.type === 'teacher' ? `T${randomNumbers}` : `S${randomNumbers}`
 
-    const birthDate = DateTime.fromISO(data.birthDate)
-
-    // Generate UUID
-    const userId = randomUUID()
+    const birthDate = DateTime.fromISO(data.birthDate.toString())
 
     const user = await User.create({
-      id: userId,
+      id: randomUUID(),
       name: data.name,
       email: data.email,
       password: data.password,
@@ -47,7 +45,8 @@ export default class AuthController {
   }
 
   async login({ request, response }: HttpContext) {
-    const { email, password } = request.only(['email', 'password'])
+    // Validate login data using schema
+    const { email, password } = await request.validate({ schema: loginUserSchema })
 
     const user = await User.verifyCredentials(email, password)
     const token = this.generateToken(user)
