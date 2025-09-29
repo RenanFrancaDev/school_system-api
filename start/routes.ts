@@ -18,10 +18,13 @@ router
       .middleware([middleware.jwtAuth()])
 
     // Users Routes
-    router.get('users', [UsersController, 'index'])
-    router.get('users/:id', [UsersController, 'show'])
-    router.put('users/:id', [UsersController, 'update']) // Can only update own profile
-    router.delete('users/:id', [UsersController, 'destroy']) // Can only delete own account
+    router
+      .group(() => {
+        router.get('users', [UsersController, 'index'])
+        router.get('users/:id', [UsersController, 'show'])
+        router.put('users/:id', [UsersController, 'update']) // Can only update own profile
+        router.delete('users/:id', [UsersController, 'destroy']) // Can only delete own account
+      })
+      .middleware([middleware.jwtAuth()])
   })
-  .middleware([middleware.jwtAuth()])
   .prefix('/api')
