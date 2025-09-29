@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
+import { randomUUID } from 'node:crypto'
 import User from '#models/user'
 import jwt from 'jsonwebtoken'
 
@@ -24,7 +25,11 @@ export default class AuthController {
 
     const birthDate = DateTime.fromISO(data.birthDate)
 
+    // Generate UUID
+    const userId = randomUUID()
+
     const user = await User.create({
+      id: userId,
       name: data.name,
       email: data.email,
       password: data.password,
@@ -54,8 +59,10 @@ export default class AuthController {
   }
 
   async me({ request, response }: HttpContext) {
-    // TODO Middleware
-    return response.ok({ message: 'Implementar middleware JWT' })
+    const user = request.user!
+    return response.ok({
+      user: user.serialize(),
+    })
   }
 
   async logout({ response }: HttpContext) {

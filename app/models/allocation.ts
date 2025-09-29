@@ -6,16 +6,16 @@ import Classroom from './classroom.js'
 
 export default class Allocation extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
-  declare studentId: number
+  declare studentId: string
 
   @column()
-  declare classroomId: number
+  declare classroomId: string
 
   @column()
-  declare teacherId: number
+  declare teacherId: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

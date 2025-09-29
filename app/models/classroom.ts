@@ -6,7 +6,7 @@ import Allocation from './allocation.js'
 
 export default class Classroom extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare name: string
@@ -18,7 +18,7 @@ export default class Classroom extends BaseModel {
   declare isAvailable: boolean
 
   @column()
-  declare teacherId: number
+  declare teacherId: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
