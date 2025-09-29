@@ -5,6 +5,8 @@ import { updateUserSchema } from '../schemas/user_schemas.js'
 export default class UsersController {
   //Get all users (with pagination)
 
+
+
   async index({ request, response }: HttpContext) {
     const page = request.input('page', 1)
     const limit = request.input('limit', 10)

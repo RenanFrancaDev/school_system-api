@@ -27,4 +27,5 @@ router
       })
       .middleware([middleware.jwtAuth()])
   })
+  .middleware([middleware.jwtAuth()])
   .prefix('/api')
